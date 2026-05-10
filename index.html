@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOTO LINK — Apprenez le Bushido Japonais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:      #E1487A;
+      --primary-light:#F472B6;
+      --sidebar:      #831843;
+      --secondary:    #AEE1F9;
+      --input-bg:     #F9FAFC;
+      --page-bg:      #F7F4F6;
+      --grad-cta:     linear-gradient(to right, #E1487A, #F472B6);
+      --grad-hero:    linear-gradient(135deg, #AEE1F9 0%, #D9F2FE 50%, #FCE7F3 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', 'Noto Sans JP', sans-serif;
+      background: var(--page-bg);
+      color: #1a1a2e;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      padding: 0.9rem 1.5rem;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(225,72,122,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      background: var(--grad-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-cta {
+      background: var(--grad-cta);
+      color: white;
+      border: none;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 8px 24px rgba(225,72,122,0.35);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      background: var(--grad-hero);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 1.5rem 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-kanji {
+      position: absolute;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 700;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .hero-kanji.k1 {
+      content: '武';
+      top: -2rem;
+      right: -1.5rem;
+      font-size: clamp(10rem, 28vw, 18rem);
+      color: rgba(225,72,122,0.06);
+    }
+    .hero-kanji.k2 {
+      bottom: -2rem;
+      left: -1rem;
+      font-size: clamp(8rem, 22vw, 14rem);
+      color: rgba(131,24,67,0.05);
+    }
+
+    .hero-inner {
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: white;
+      border: 1.5px solid rgba(225,72,122,0.2);
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.85rem, 5.5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 1.15;
+      color: #1a1a2e;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: var(--grad-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #5a5a72;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    /* Pills */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: white;
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .pill.accent {
+      background: var(--grad-cta);
+      color: white;
+      box-shadow: 0 4px 14px rgba(225,72,122,0.3);
+    }
+
+    /* CTA */
+    .hero-cta-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      background: var(--grad-cta);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 999px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+    }
+    .btn-cta:hover {
+      box-shadow: 0 14px 36px rgba(225,72,122,0.42);
+      transform: translateY(-2px);
+    }
+    .btn-cta:active { transform: scale(0.97); }
+
+    .hero-contact {
+      font-size: 0.82rem;
+      color: #999;
+    }
+    .hero-contact a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .hero-contact a:hover { text-decoration: underline; }
+
+    /* ── FREE CALLOUT ── */
+    .free-callout {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      background: white;
+      border: 2px solid rgba(225,72,122,0.15);
+      border-radius: 2rem;
+      padding: 1.1rem 2.5rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 8px 32px rgba(225,72,122,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .free-callout::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(225,72,122,0.04), rgba(174,225,249,0.08));
+      pointer-events: none;
+    }
+
+    .free-callout-price {
+      font-size: clamp(2.4rem, 8vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      background: var(--grad-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .free-callout-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    /* ── WHY SECTION ── */
+    .section {
+      padding: 5rem 1.5rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.75rem;
+    }
+
+    .label-tag {
+      display: inline-block;
+      background: rgba(225,72,122,0.1);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 0.3rem 0.95rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.55rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #1a1a2e;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.6rem;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.1rem;
+      transition: all 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(225,72,122,0.11);
+    }
+
+    .card-icon {
+      width: 50px;
+      min-width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #FCE7F3, #AEE1F9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+    }
+
+    .card-body h3 {
+      font-size: 0.975rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1a1a2e;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-body p {
+      font-size: 0.855rem;
+      color: #666;
+      line-height: 1.65;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .divider span { height: 1px; background: rgba(225,72,122,0.15); flex: 1; }
+    .divider p {
+      font-size: 0.78rem;
+      color: #bbb;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ── FORM ── */
+    .form-section {
+      background: var(--grad-hero);
+      padding: 5rem 1.5rem 6rem;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: 2.5rem;
+      padding: 2.25rem 1.75rem;
+      max-width: 520px;
+      margin: 0 auto;
+      box-shadow: 0 20px 64px rgba(225,72,122,0.13);
+    }
+
+    .form-card-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-card-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #1a1a2e;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-card-sub {
+      font-size: 0.83rem;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #444;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.005em;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"] {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid #e6e6ee;
+      border-radius: 1rem;
+      padding: 0.85rem 1rem;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.925rem;
+      font-weight: 500;
+      color: #1a1a2e;
+      outline: none;
+      transition: all 0.3s;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    input[type="email"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(225,72,122,0.12);
+    }
+
+    input::placeholder { color: #c0c0cc; font-weight: 400; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--grad-cta);
+      color: white;
+      border: none;
+      padding: 1.05rem;
+      border-radius: 999px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.35rem;
+    }
+    .btn-submit:hover:not(:disabled) {
+      box-shadow: 0 12px 32px rgba(225,72,122,0.42);
+      transform: translateY(-2px);
+    }
+    .btn-submit:active:not(:disabled) { transform: scale(0.97); }
+    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    /* Success */
+    .success-block {
+      display: none;
+      background: linear-gradient(135deg, #FFF0F6, #EBF8FF);
+      border: 1.5px solid rgba(225,72,122,0.18);
+      border-radius: 1.5rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .success-block.visible {
+      display: block;
+      animation: fadeUp 0.45s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-icon { font-size: 2.25rem; margin-bottom: 0.65rem; }
+
+    .success-block p {
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: var(--sidebar);
+      line-height: 1.6;
+    }
+
+    .form-privacy {
+      text-align: center;
+      margin-top: 1.1rem;
+      font-size: 0.77rem;
+      color: #bbb;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--sidebar);
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+    footer strong { color: white; font-weight: 700; }
+    footer a { color: var(--primary-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (min-width: 640px) {
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+
+      .form-card { padding: 3rem 3rem; }
+
+      .hero-cta-wrap { flex-direction: row; justify-content: center; }
+      .btn-cta { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">KOTO LINK</span>
+    <a href="#inscription" class="nav-cta">S'inscrire</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="accueil">
+    <span class="hero-kanji k1" aria-hidden="true">武</span>
+    <span class="hero-kanji k2" aria-hidden="true">道</span>
+
+    <div class="hero-inner">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Inscription gratuite — Places limitées
+      </div>
+
+      <h1>Apprenez le Bushido Japonais et <em>appliquez-le à votre programme</em></h1>
+
+      <p class="hero-subtitle">Devenez plus qu'un apprenant</p>
+
+      <div class="free-callout">
+        <span class="free-callout-price">100% Gratuit</span>
+        <span class="free-callout-label">Aucun paiement · Entrée libre pour tous</span>
+      </div>
+
+      <div class="pills">
+        <span class="pill">📅 Samedi 16 Mai 2026</span>
+        <span class="pill">🕒 15h – 17h</span>
+        <span class="pill">📍 FLLAC – UAC, Abomey-Calavi</span>
+      </div>
+
+      <div class="hero-cta-wrap">
+        <a href="#inscription" class="btn-cta">Je m'inscris gratuitement →</a>
+      </div>
+
+      <p class="hero-contact" style="margin-top:1.1rem;">
+        Une question ? <a href="tel:+2290141415229">+229 01 41 41 52 29</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section" id="pourquoi">
+    <div class="section-header">
+      <div class="label-tag">Pourquoi venir ?</div>
+      <h2 class="section-title">Ce que vous allez vivre</h2>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-icon" aria-hidden="true">⚔️</div>
+        <div class="card-body">
+          <h3>Le code des samouraïs</h3>
+          <p>Découvrez le code d'honneur des samouraïs et ce qu'il peut changer dans votre façon d'apprendre.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon" aria-hidden="true">📚</div>
+        <div class="card-body">
+          <h3>Des principes concrets</h3>
+          <p>Applicables dès maintenant dans vos études et votre quotidien — pas de théorie sans pratique.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon" aria-hidden="true">🌸</div>
+        <div class="card-body">
+          <h3>Une communauté vivante</h3>
+          <p>Rejoignez une communauté passionnée par la culture et la langue japonaise.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon" aria-hidden="true">🚀</div>
+        <div class="card-body">
+          <h3>La plateforme KOTO LINK</h3>
+          <p>Accédez à la plateforme pour continuer votre apprentissage bien après l'événement.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section" id="inscription">
+    <div class="section-header">
+      <div class="label-tag">Inscription</div>
+      <h2 class="section-title">Réservez votre place</h2>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <p class="form-card-title">Participez gratuitement</p>
+        <p class="form-card-sub">Samedi 16 Mai · 15h – 17h<br>Salle pédagogique, FLLAC – UAC, Abomey-Calavi</p>
+      </div>
+
+      <form id="regForm" novalidate>
+
+        <div class="form-group">
+          <label for="nom">Nom complet <span aria-hidden="true">*</span></label>
+          <input type="text" id="nom" name="nom"
+                 placeholder="Votre nom et prénom"
+                 required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="whatsapp">Numéro WhatsApp <span aria-hidden="true">*</span></label>
+          <input type="tel" id="whatsapp" name="whatsapp"
+                 placeholder="+229 XX XX XX XX"
+                 required autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Adresse email <span aria-hidden="true">*</span></label>
+          <input type="email" id="email" name="email"
+                 placeholder="vous@email.com"
+                 required autocomplete="email">
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Je m'inscris gratuitement →
+        </button>
+
+        <div class="success-block" id="successMsg" role="alert" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">🎌</div>
+          <p>Merci ! Vous êtes bien inscrit(e).<br>Un rappel vous sera envoyé avant l'événement.</p>
+        </div>
+
+      </form>
+
+      <p class="form-privacy">🔒 Vos données sont confidentielles et ne seront jamais partagées.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>KOTO LINK</strong> — Apprenez le Bushido, devenez plus qu'un apprenant.</p>
+    <p>
+      📍 Salle pédagogique, FLLAC – UAC, Abomey-Calavi &nbsp;·&nbsp;
+      📞 <a href="tel:+2290141415229">+229 01 41 41 52 29</a>
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById('regForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const form      = this;
+      const btn       = document.getElementById('submitBtn');
+      const success   = document.getElementById('successMsg');
+      const inputs    = form.querySelectorAll('input');
+
+      // Basic HTML5 validation
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = 'Envoi en cours…';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xpqbkabn', {
+          method:  'POST',
+          body:    new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          btn.style.display = 'none';
+          inputs.forEach(i => { i.disabled = true; });
+          success.classList.add('visible');
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          const data = await res.json().catch(() => ({}));
+          const msg  = data.errors
+            ? data.errors.map(err => err.message).join(', ')
+            : 'Une erreur est survenue. Réessayez.';
+          alert('Erreur : ' + msg);
+          btn.disabled    = false;
+          btn.textContent = 'Réessayer →';
+        }
+      } catch (_) {
+        alert('Connexion impossible. Vérifiez votre connexion internet et réessayez.');
+        btn.disabled    = false;
+        btn.textContent = 'Réessayer →';
+      }
+    });
+  </script>
+
+</body>
+</html>
